@@ -13,50 +13,34 @@ function getDiceString(){
     return text;
 }
 
+
+
 function getDiceGame() {
-    const readline = require('readline');
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    rl.question("Are you want additional card?\n" , (answer) => {
-
-        if(answer == "y") {
-            res += Math.floor((Math.random() * 14) + 1);
-            getDiceGame();
-        }
-        else(answer == "n")
-            return "no";
-        rl.close();
-    });
-    /*
-    var num1 = Math.floor((Math.random() * 14) + 1);
-    console.log("r u want additional card?")
-    Readline;
-    var num2 = Math.floor((Math.random() * 14) + 1);
-    return num1 + num2;
-    */
+    rl.question("Are you want additional card?\n", processInput);
 }
 
 
-//console.log(getDiceNumber());
-//console.log(getDiceString());
-console.log(getDiceGame());
-
-/*
-var res = 0;
-for(var i=0 ; i<21 ; i++)
-{
-    var tmp = getDiceGame();
-    if (tmp == "no")
-        break;
-    res += tmp;
+function processInput(answer) {
+    if (answer === "n" || times >= 5 || res > 21)
+    {
+        console.log(res);
+        process.exit(0);
+    }
+    else if (answer === "y") {
+        times++;
+        res += Math.floor((Math.random() * 14) + 1);
+        getDiceGame();
+    }
 }
-console.log(res);
-*/
 
+
+
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 var res = 0;
+var times = 0
 getDiceGame();
-console.log(res);
